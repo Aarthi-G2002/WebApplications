@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shoe Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+   <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color:rgb(255, 128, 128);
+            color: black;
+            font-family: Arial, sans-serif;
+        }
+
+        #top-data {
+            background-color: #1e1e2f;
+            color: white;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+
+        #top-data a {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            margin-right: 20px;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        #top-data a:hover {
+           text-decoration: underline;
+        }
+
+        #top-data img {
+            width: 60px;
+            height: 60px;
+        }
+
+        .search-container {
+            position: relative;
+            flex-grow: 1;
+            max-width: 600px;
+            margin-left: 20px;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        #search {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            font-size: 16px;
+            border-radius: 30px;
+            border: white;
+        }
+
+        .scroll-container {
+            padding: 20px;
+            height: calc(100vh - 90px);
+            overflow-y: auto;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+           
+        }
+
+      .item {
+		 margin-top: 25px;
+    	 background-color: rgb(255, 255, 255);
+   		 width: 300px;
+   		 padding: 20px;
+    	 text-align: center;
+    	 border-radius: 10px;
+    	 display: flex;
+    	flex-direction: column;
+}
+
+	.item img {
+    width: 100%;
+    height: 200px;
+    border-radius: 10px;
+	}
+
+	.item h4, .item h3 {
+    margin: 10px ;
+	}
+	.item:hover {
+    transform: scale(1.1); /* Slightly increase the size */
+    z-index: 1; /* Bring it to the front */
+    transition: transform 0.3s ease; /* Smooth transition */
+}
+    button {
+    background-color: rgb(255, 0, 128);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    width: 150px;
+    height: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: auto; 																			/* This keeps the button at the bottom */
+    margin-left: auto;																			 /* Center the button horizontally */
+    margin-right: auto; /* Center the button horizontally */
+    display: block; 																			/* Make the button a block element for centering */
+}
+
+
+	button:hover {
+    background-color: rgb(128, 0, 128);
+	}
+
+        #notification-box {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: lightgreen;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+            z-index: 1000;
+        }
+                .scroll-container {
+            height: calc(100vh - 90px); 
+            width: 100%;
+            overflow-y: auto; 
+        }
+
+        .scroll-container::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .scroll-container::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 5px;
+        }
+
+        .scroll-container::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+	
+
+	#search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 1000;
+    display: none;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+	#search-results div {
+    padding: 10px;
+    cursor: pointer;
+    color: black; 
+}
+
+    </style>
+</head>
+<body>
+  
+<div id="top-data">
+   
+    <div>
+		
+        <a href="shoewebsite.html">
+    <img src="image/DALL·E 2024-10-16 20.09.53 - A professional and minimalist logo design for a shoe website, featuring a stylized shoe silhouette without any text. The logo should have a dark blue .webp" alt="Shoe Website Logo">
+</a>
+      
+        <a href="shoewebsitem.html">Men</a>
+        <a href="shoewebsitew.html">Women</a>
+        <a href="shoewebsitek.html">Kids</a>
+        
+    </div>
+     <div class="search-container">
+        <i class="fas fa-search"></i>
+        <input id="search" placeholder="Search for Products...">
+        <div id="search-results"></div>
+    </div>
+     <a href="shoewebsitecart.html">&#x1f6d2;</a>
+</div>
+
+<div class="scroll-container">
+    <div class="container">
+        <div class="item">
+            <img src="image/menshoe1.jpg" alt="men1">
+            <h4>ASICS</h4>
+            <h3>Men's Sc0162g Sneakers<br>Size Available: 4, 5, 6, 7, 8</h3>
+            <h3>₹600</h3>
+            <button onclick="Addtocart('ASICS', 'image/menshoe1.jpg','600')">Add to cart</button>
+        </div>
+
+        <div class="item">
+            <img src="image/menshoe2.jpg" alt="men2">
+            <h4>ASICS</h4>
+            <h3>Men's Gel-Contend 4B+ Running Shoes<br>Size Available: 4, 5, 6, 7, 8</h3>
+            <h3>₹600</h3>
+            <button onclick="Addtocart('ASICS', 'image/menshoe2.jpg','600')">Add to cart</button>
+        </div>
+
+        <div class="item">
+            <img src="image/menshoe3.jpg" alt="men3">
+            <h4>ASICS</h4>
+            <h3>Men's 001 Trainer<br>Size Available: 4, 5, 6, 7, 8</h3>
+            <h3>₹600</h3>
+            <button onclick="Addtocart('ASICS', 'image/menshoe3.jpg','600')">Add to cart</button>
+        </div>
+
+        <div class="item">
+            <img src="image/menshoe11.jpg" alt="men4">
+            <h4>ASICS</h4>
+            <h3>Men's Slip-on Walking Shoes Trek<br>Size Available: 4, 5, 6, 7, 8</h3>
+            <h3>₹700</h3>
+            <button onclick="Addtocart('ASICS', 'image/menshoe4.jpg','700')">Add to cart</button>
+        </div>
+
+        <div class="item">
+            <img src="image/menshoe5.jpg" alt="men5">
+            <h4>Sparx</h4>
+            <h3>Men's Taylor Slip On E Formal Shoes<br>Size Available: 4, 5, 6, 7, 8</h3>
+            <h3>₹700</h3>
+            <button onclick="Addtocart('Sparx', 'image/menshoe5.jpg','700')">Add to cart</button>
+        </div>
+
+        <div class="item">
+            <img src="image/menshoe6.jpg" alt="men6">
+            <h4>Hush Puppies</h4>
+            <h3>Men's Sneaker<br>Size Available: 4, 5, 6, 7, 8</h3>
+            <h3>₹800</h3>
+            <button onclick="Addtocart('Hush Puppies', 'image/menshoe6.jpg','800')">Add to cart</button>
+        </div>
+
+        <div class="item">
+            <img src="image/menshoe7.jpg" alt="men7">
+            <h4>Bata</h4>
+            <h3>Men's D'Lites 4.0 Energy Code Lace Up Shoe<br>Size Available: 4, 5, 6, 7, 8</h3>
+            <h3>₹800</h3>
+            <button onclick="Addtocart('Bata', 'image/menshoe7.jpg','800')">Add to cart</button>
+        </div>
+
+        <div class="item">
+            <img src="image/menshoe8.jpg" alt="men8">
+            <h4>Bata</h4>
+            <h3>Men's D'Lites 4.0 Energy Code Lace Up Shoe<br>Size Available: 4, 5, 6, 7, 8</h3>
+            <h3>₹800</h3>
+            <button onclick="Addtocart('Bata', 'image/menshoe8.jpg','800')">Add to cart</button>
+        </div>
+
+        <div class="item">
+            <img src="image/menshoe9.jpg" alt="men9">
+            <h4>Skechers</h4>
+            <h3>Men's Glide Step Slip Ons<br>Size Available: 4, 5, 6, 7, 8</h3>
+            <h3>₹1400</h3>
+            <button onclick="Addtocart('Skechers', 'image/menshoe9.jpg','1400')">Add to cart</button>
+        </div>
+
+        <div class="item">
+            <img src="image/menshoe10.jpg" alt="men10">
+            <h4>Skechers</h4>
+            <h3>Men's Glide Step Slip Ons<br>Size Available: 4, 5, 6, 7, 8</h3>
+            <h3>₹1400</h3>
+            <button onclick="Addtocart('Skechers', 'image/menshoe10.jpg','1400')">Add to cart</button>
+        </div>
+
+        <div class="item">
+            <img src="image/menshoe11.jpg" alt="men11">
+            <h4>Adidas</h4>
+            <h3>Men's Ultraboost 21<br>Size Available: 4, 5, 6, 7, 8</h3>
+            <h3>₹1400</h3>
+            <button onclick="Addtocart('Adidas', 'image/menshoe11.jpg','1400')">Add to cart</button>
+        </div>
+
+        <div class="item">
+            <img src="image/menshoe12.jpg" alt="men12">
+            <h4>Adidas</h4>
+            <h3>Men's Ultraboost 21<br>Size Available: 4, 5, 6, 7, 8</h3>
+            <h3>₹1400</h3>
+            <button onclick="Addtocart('Adidas', 'image/menshoe12.jpg','1400')">Add to cart</button>
+        </div>
+        <div class="item">
+            <img src="image/menshoe13.jpg" alt="men12">
+            <h4>Adidas</h4>
+            <h3>Men's Ultraboost 21<br>Size Available: 4, 5, 6, 7, 8</h3>
+            <h3>₹1400</h3>
+            <button onclick="Addtocart('Adidas', 'image/menshoe12.jpg','1400')">Add to cart</button>
+        </div>
+        <div class="item">
+            <img src="image/menshoe14.jpg" alt="men12">
+            <h4>Adidas</h4>
+            <h3>Men's Ultraboost 21<br>Size Available: 4, 5, 6, 7, 8</h3>
+            <h3>₹1400</h3>
+            <button onclick="Addtocart('Adidas', 'image/menshoe12.jpg','1400')">Add to cart</button>
+        </div>
+        <div class="item">
+            <img src="image/menshoe15.jpg" alt="men12">
+            <h4>Adidas</h4>
+            <h3>Men's Ultraboost 21<br>Size Available: 4, 5, 6, 7, 8</h3>
+            <h3>₹1400</h3>
+            <button onclick="Addtocart('Adidas', 'image/menshoe12.jpg','1400')">Add to cart</button>
+        </div>
+        <div class="item">
+            <img src="image/menshoe1.jpg" alt="men12">
+            <h4>Adidas</h4>
+            <h3>Men's Ultraboost 21<br>Size Available: 4, 5, 6, 7, 8</h3>
+            <h3>₹1400</h3>
+          <button onclick="Addtocart('Adidas', 'image/menshoe1.jpg', '600')">Add to cart</button>
+
+        </div>
+    </div>
+</div>
+
+<div id="notification-box"></div>
+ 
+<script>
+    function Addtocart(itemName, itemImage, price) {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        cart.push({ name: itemName, image: itemImage, price: price });
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        // Show notification
+        const notificationBox = document.getElementById('notification-box');
+        notificationBox.innerHTML = 'Added to the cart'; // Show the item name in the message
+        notificationBox.style.display = 'block';
+        
+        // Hide notification after 3 seconds
+        setTimeout(() => {
+            notificationBox.style.display = 'none';
+        }, 3000);
+    }
+    // Array of product categories
+const products = [
+    "Men's Shoes",
+    "Women's Shoes",
+    "Kids' Shoes",
+    "Shoes for Men",
+    "Shoes for Women",
+    "Shoes for Kids"
+];
+
+// Function to handle search on input change
+	document.getElementById('search').addEventListener('input', function() {
+    const query = this.value.toLowerCase();
+    const resultsContainer = document.getElementById('search-results');
+    resultsContainer.innerHTML = "";
+
+    const results = products.filter(product => product.toLowerCase().includes(query));
+
+    if (results.length > 0 && query) {
+        results.forEach(result => {
+            const div = document.createElement('div');
+            div.textContent = result;
+            div.onclick = function() { 
+                document.getElementById('search').value = result;
+                resultsContainer.innerHTML = "";
+                resultsContainer.style.display = 'none';
+                
+                if (result === "Men's Shoes" || result === "Shoes for Men") {
+                    window.location.href = 'shoewebsitem.html';
+                } else if (result === "Women's Shoes" || result === "Shoes for Women") {
+                    window.location.href = 'shoewebsitew.html';
+                } else if (result === "Kids' Shoes" || result === "Shoes for Kids") {
+                    window.location.href = 'shoewebsitek.html';
+                }
+            };
+            resultsContainer.appendChild(div);
+        });
+        resultsContainer.style.display = 'block';
+    } else {
+        resultsContainer.style.display = 'none';
+    }
+});
+
+// Hide results when clicking outside the search input
+	document.addEventListener('click', function(event) {
+    const resultsContainer = document.getElementById('search-results');
+    if (!event.target.closest('.search-container')) {
+        resultsContainer.style.display = 'none';
+    }
+});
+</script>
+
+</body>
+</html>

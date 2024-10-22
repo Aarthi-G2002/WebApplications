@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Your Cart</title>
+    <style>
+   * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}	
+
+	body {
+    background-color: #f4f4f4;
+    color: black;
+    font-family: Arial, sans-serif;
+	}
+        .cart-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            border: white;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: white;
+        }
+        .cart-item img {
+            width: 100px;
+        }
+        .cart-item h4, .cart-item p {
+            margin: 0;
+        }
+        .cart-item button, .cart-item input {
+            margin-left: 10px;
+        }
+        .cart-item button {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .total-container {
+            margin-top: 20px;
+        }
+        .total-container h3 {
+            margin: 0;
+        }
+        .payment-button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        .payment-button:hover {
+            background-color: #218838;
+        }
+        
+           #top-data {
+            background-color: #1e1e2f;
+            color: white;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+
+        #top-data a {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            margin-right: 20px;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        #top-data a:hover {
+           text-decoration: underline;
+        }
+
+        #top-data img {
+            width: 60px;
+            height: 60px;
+        }
+         .search-container {
+            position: relative;
+            flex-grow: 1;
+            max-width: 600px;
+            margin-left: 20px;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        #search {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            font-size: 16px;
+            border-radius: 30px;
+            border: 1px solid #ccc;
+        }
+        #search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 1000;
+    display: none;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#search-results div {
+    padding: 10px;
+    cursor: pointer;
+    color: black; 
+}
+    </style>
+</head>
+<body>
+
+
+<div id="top-data">
+   
+    <div>
+		
+        <a href="shoewebsite.html">
+    <img src="image/DALL·E 2024-10-16 20.09.53 - A professional and minimalist logo design for a shoe website, featuring a stylized shoe silhouette without any text. The logo should have a dark blue .webp" alt="Shoe Website Logo">
+</a>
+      
+        <a href="shoewebsitem.html">Men</a>
+        <a href="shoewebsitew.html">Women</a>
+        <a href="shoewebsitek.html">Kids</a>
+        
+    </div>
+     <div class="search-container">
+        <i class="fas fa-search"></i>
+        <input id="search" placeholder="Search for Products...">
+        <div id="search-results"></div>
+    </div>
+     <a href="shoewebsitecart.html">&#x1f6d2;</a>
+</div>
+
+    <div class="cart-container">
+        <h2>Your Cart</h2>
+        <div id="cart-items"></div>
+        <div class="total-container">
+            <h3>Total Amount: <span id="total-amount">0</span></h3>
+            <button class="payment-button" onclick="goToPayment()">Proceed to Payment</button>
+        </div>
+    </div>
+
+    <script>
+        let selectedItems = [];
+
+        // Function to load the cart items from local storage and display them
+        function loadCart() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let cartItems = document.getElementById('cart-items');
+            cartItems.innerHTML = ''; // Clear previous cart items
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p>Your cart is empty.</p>';
+            } else {
+                cart.forEach((product, index) => {
+                    cartItems.innerHTML += `
+                        <div class="cart-item">
+                            <input type="checkbox" id="select-item-${index}" onchange="calculateTotal(${index}, ${product.price})">
+                            <img src="${product.image}" alt="${product.name}">
+                            <div>
+                                <h4>${product.name}</h4>
+                                <p>Price: ${product.price}</p>
+                            </div>
+                            <button onclick="removeFromCart(${index})">Remove</button>
+                        </div>
+                    `;
+                });
+            }
+            updateTotalAmount();
+        }
+
+        // Function to remove an item from the cart
+        function removeFromCart(index) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart)); 
+            loadCart(); // Reload the cart to update the display
+        }
+
+        // Function to calculate the total price of selected items
+        function calculateTotal(index, price) {
+            let checkbox = document.getElementById(`select-item-${index}`);
+            if (checkbox.checked) {
+                selectedItems.push(price);
+            } else {
+                selectedItems = selectedItems.filter(item => item !== price);
+            }
+            updateTotalAmount();
+        } 
+
+        // Function to update the total amount displayed
+        function updateTotalAmount() {
+            let totalAmount = selectedItems.reduce((total, price) => total + price, 0);
+            document.getElementById('total-amount').innerText = totalAmount;
+        }
+
+        // Function to navigate to payment.html
+        function goToPayment() {
+            // Assuming you want to pass the total amount to payment.html
+            let totalAmount = selectedItems.reduce((total, price) => total + price, 0);
+            localStorage.setItem('totalAmount', totalAmount); 
+            window.location.href = 'shoewebsitepayment.html'; // Redirect to the payment page
+        }
+
+        // Load the cart when the page is loaded
+        window.onload = loadCart;
+        // Search 
+        // Array of product categories
+const products = [
+    "Men's Shoes",
+    "Women's Shoes",
+    "Kids' Shoes",
+    "Shoes for Men",
+    "Shoes for Women",
+    "Shoes for Kids"
+];
+
+// Function to handle search on input change
+	document.getElementById('search').addEventListener('input', function() {
+    const query = this.value.toLowerCase();
+    const resultsContainer = document.getElementById('search-results');
+    resultsContainer.innerHTML = "";
+
+    const results = products.filter(product => product.toLowerCase().includes(query));
+
+    if (results.length > 0 && query) {
+        results.forEach(result => {
+            const div = document.createElement('div');
+            div.textContent = result;
+            div.onclick = function() { 
+                document.getElementById('search').value = result;
+                resultsContainer.innerHTML = "";
+                resultsContainer.style.display = 'none';
+                
+                if (result === "Men's Shoes" || result === "Shoes for Men") {
+                    window.location.href = 'shoewebsitem.html';
+                } else if (result === "Women's Shoes" || result === "Shoes for Women") {
+                    window.location.href = 'shoewebsitew.html';
+                } else if (result === "Kids' Shoes" || result === "Shoes for Kids") {
+                    window.location.href = 'shoewebsitek.html';
+                }
+            };
+            resultsContainer.appendChild(div);
+        });
+        resultsContainer.style.display = 'block';
+    } else {
+        resultsContainer.style.display = 'none';
+    }
+});
+
+// Hide results when clicking outside the search input
+	document.addEventListener('click', function(event) {
+    const resultsContainer = document.getElementById('search-results');
+    if (!event.target.closest('.search-container')) {
+        resultsContainer.style.display = 'none';
+    }
+});
+    </script>
+
+</body>
+</html>

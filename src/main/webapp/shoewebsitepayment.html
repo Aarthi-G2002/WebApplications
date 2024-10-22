@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .payment-form {
+            max-width: 300px; 
+            margin: 0 auto;
+            background-color:white;
+            padding: 20px;  
+            border-radius: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;  
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color:black;
+            font-size: 14px;  
+        }
+        .form-group input {
+            width: 100%;
+            padding: 8px;  
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 12px;  
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        .total-amount {
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;  
+            margin-bottom: 15px;  
+            color: black;
+        }
+        .payment-button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .payment-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-form">
+        <h2>Payment</h2>
+        <div class="form-group">
+            <label for="name">Country/Region</label>
+            <input type="text" id="name" required>
+        </div>
+        <div class="form-group">
+            <label for="fullName">Full Name (First and Last Name)</label>
+            <input type="text" id="fullName" required>
+        </div>
+        <div class="form-group">
+            <label for="mobileNumber">Mobile Number</label>
+            <input type="number" id="mobileNumber" required>
+        </div>
+        <div class="form-group">
+            <label for="pincode">Pincode</label>
+            <input type="number" id="pincode" required>
+        </div>
+        <div class="form-group">
+            <label for="address">Flat, House No., Building, Company, Apartment</label>
+            <input type="text" id="address" required>
+        </div>
+        <div class="form-group">
+            <label for="area">Area, Street, Sector, Village</label>
+            <input type="text" id="area" required>
+        </div>
+        <div class="form-group">
+            <label for="landmark">Landmark</label>
+            <input type="text" id="landmark" required>
+        </div>
+        <div class="form-group">
+            <label for="city">Town/City</label>
+            <input type="text" id="city" required>
+        </div>
+        <div class="form-group">
+            <label for="state">State</label>
+            <input type="text" id="state" required>
+        </div>
+        
+        <p>Total Amount to Pay: <span id="total-amount"></span></p>
+        <button class="payment-button" onclick="makePayment()">Make Payment</button>
+    </div>
+
+    <script>
+        // Load the total amount from local storage and display it
+        window.onload = function() {
+            let totalAmount = localStorage.getItem('totalAmount');
+            document.getElementById('total-amount').innerText = totalAmount;
+        }
+
+        // Payment process with validation
+        function makePayment() {
+            const name = document.getElementById('name').value;
+            const fullName = document.getElementById('fullName').value;
+            const mobileNumber = document.getElementById('mobileNumber').value;
+            const pincode = document.getElementById('pincode').value;
+            const address = document.getElementById('address').value;
+            const area = document.getElementById('area').value;
+            const landmark = document.getElementById('landmark').value;
+            const city = document.getElementById('city').value;
+            const state = document.getElementById('state').value;
+
+            // Check if all fields are filled
+            if (!name || !fullName || !mobileNumber || !pincode || !address || !area || !landmark || !city || !state) {
+                alert("Please fill in all fields.");
+            } else {
+                // Payment success logic
+                alert("Payment Successful!");
+                localStorage.removeItem('totalAmount'); // Clear the stored total
+                if (confirm("Do you want to continue shopping?")) {
+                    window.location.href = "shoewebsite.html"; 
+                } else {
+                    window.location.href = "shoewebsite.html"; 
+                }
+            }
+        }
+    </script>
+</body>
+</html>

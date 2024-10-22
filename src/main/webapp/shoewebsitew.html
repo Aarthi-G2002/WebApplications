@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shoe Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color:rgb(255, 128, 128);
+            color: black;
+            font-family: Arial, sans-serif;
+        }
+
+        #top-data {
+            background-color: #1e1e2f;
+            color: white;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+
+        #top-data a {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            margin-right: 20px;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        #top-data a:hover {
+           text-decoration: underline;
+        }
+
+        #top-data img {
+            width: 60px;
+            height: 60px;
+        }
+
+        .search-container {
+            position: relative;
+            flex-grow: 1;
+            max-width: 600px;
+            margin-left: 20px;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        #search {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            font-size: 16px;
+            border-radius: 30px;
+            border: white;
+        }
+
+        .scroll-container {
+            padding: 20px;
+            height: calc(100vh - 90px);
+            overflow-y: auto;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+           
+        }
+
+      .item {
+		 margin-top: 25px;
+    	 background-color: rgb(255, 255, 255);
+   		 width: 300px;
+   		 padding: 20px;
+    	 text-align: center;
+    	 border-radius: 10px;
+    	 display: flex;
+    	flex-direction: column;
+}
+
+	.item img {
+    width: 100%;
+    height: 200px;
+    border-radius: 10px;
+	}
+
+	.item h4, .item h3 {
+    margin: 10px ;
+	}
+	.item:hover {
+    transform: scale(1.1); /* Slightly increase the size */
+    z-index: 1; /* Bring it to the front */
+    transition: transform 0.3s ease; /* Smooth transition */
+}
+    button {
+    background-color: rgb(255, 0, 128);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    width: 150px;
+    height: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: auto; 																			/* This keeps the button at the bottom */
+    margin-left: auto;																			 /* Center the button horizontally */
+    margin-right: auto; /* Center the button horizontally */
+    display: block; 																			/* Make the button a block element for centering */
+}
+
+
+	button:hover {
+    background-color: rgb(128, 0, 128);
+	}
+
+        #notification-box {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: lightgreen;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+            z-index: 1000;
+        }
+                .scroll-container {
+            height: calc(100vh - 90px); 
+            width: 100%;
+            overflow-y: auto; 
+        }
+
+        .scroll-container::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .scroll-container::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 5px;
+        }
+
+        .scroll-container::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+		
+		
+
+	#search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 1000;
+    display: none;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+	#search-results div {
+    padding: 10px;
+    cursor: pointer;
+    color: black; /* Set text color to black */
+}
+
+    </style>
+</head>
+<body>
+  
+<div id="top-data">
+   
+    <div>
+		
+   <a href="shoewebsite.html">
+    <img src="image/DALL·E 2024-10-16 20.09.53 - A professional and minimalist logo design for a shoe website, featuring a stylized shoe silhouette without any text. The logo should have a dark blue .webp" alt="Shoe Website Logo">
+</a>
+      
+        <a href="shoewebsitem.html">Men</a>
+        <a href="shoewebsitew.html">Women</a>
+        <a href="shoewebsitek.html">Kids</a>
+        
+    </div>
+     <div class="search-container">
+        <i class="fas fa-search"></i>
+        <input id="search" placeholder="Search for Products...">
+        <div id="search-results"></div>
+    </div>
+     <a href="shoewebsitecart.html">&#x1f6d2;</a>
+</div>
+
+<div class="scroll-container">
+    <div class="container">
+      
+        <div class="item">
+            <img src="image/women_shoe18.jpg" alt="women1">
+            <h4> Layasa </h4>
+            <h3> Comfortable Lightweight Casual Lace-up Sneaker for Women/Girls<br>
+                Size Available: 4, 5, 6, 7, 8 </h3>
+            <h3> ₹985 </h3>
+            <button onclick="Addtocart('women1', 'image/women_shoe18.jpg', '985')"> Add to cart </button>
+        </div>
+       
+        <div class="item">
+            <img src="image/women_shoe2.jpg" alt="women2">
+            <h4> Skechers </h4>
+            <h3> Women's D'Lux Fitness Pure Glam Sneaker<br>
+                Size Available: 4, 5, 6, 7, 8 </h3>
+            <h3> ₹900 </h3>
+            <button onclick="Addtocart('women2', 'image/women_shoe2.jpg', '900')"> Add to cart </button>
+        </div>
+       
+        <div class="item">
+            <img src="image/women_shoe3.jpg" alt="women3">
+            <h4> Adidas </h4>
+            <h3> Women's Cloudfoam Pure Running Shoe<br>
+                Size Available: 4, 5, 6, 7, 8 </h3>
+            <h3> ₹750 </h3>
+            <button onclick="Addtocart('women3', 'image/women_shoe3.jpg', '750')"> Add to cart </button>
+        </div>
+        
+        <div class="item">
+            <img src="image/women_shoe4.jpg" alt="women4">
+            <h4> Nike </h4>
+            <h3> Women's Air Max Excee<br>
+                Size Available: 4, 5, 6, 7, 8 </h3>
+            <h3> ₹1200 </h3>
+            <button onclick="Addtocart('women4', 'image/women_shoe4.jpg', '1200')"> Add to cart </button>
+        </div>
+       
+        <div class="item">
+            <img src="image/women_shoe5.jpg" alt="women5">
+            <h4> Puma </h4>
+            <h3> Women's RS-X Softcase Sneaker<br>
+                Size Available: 4, 5, 6, 7, 8 </h3>
+            <h3> ₹980 </h3>
+            <button onclick="Addtocart('women5', 'image/women_shoe5.jpg', '980')"> Add to cart </button>
+        </div>
+       
+        <div class="item">
+            <img src="image/women_shoe6.jpg" alt="women6">
+            <h4> Reebok </h4>
+            <h3> Women's Classic Renaissance Sneaker<br>
+                Size Available: 4, 5, 6, 7, 8 </h3>
+            <h3> ₹850 </h3>
+            <button onclick="Addtocart('women6', 'image/women_shoe6.jpg', '850')"> Add to cart </button>
+        </div>
+      
+        <div class="item">
+            <img src="image/women_shoe7.jpg" alt="women7">
+            <h4> New Balance </h4>
+            <h3> Women's 574 Core Sneaker<br>
+                Size Available: 4, 5, 6, 7, 8 </h3>
+            <h3> ₹1100 </h3>
+            <button onclick="Addtocart('women7', 'image/women_shoe7.jpg', '1100')"> Add to cart </button>
+        </div>
+      
+        <div class="item">
+            <img src="image/women_shoe8.jpg" alt="women8">
+            <h4> Hoka One One </h4>
+            <h3> Women's Bondi 7 Running Shoe<br>
+                Size Available: 4, 5, 6, 7, 8 </h3>
+            <h3> ₹1500 </h3>
+            <button onclick="Addtocart('women8', 'image/women_shoe8.jpg', '1500')"> Add to cart </button>
+        </div>
+      
+        <div class="item">
+            <img src="image/women_shoe9.jpg" alt="women9">
+            <h4> Nike Air Max </h4>
+            <h3> Men's Air Max 270<br>
+                Size Available: 6, 7, 8, 9, 10 </h3>
+            <h3> ₹1450 </h3>
+            <button onclick="Addtocart('men1', 'image/men_shoe1.jpg', '1450')"> Add to cart </button>
+        </div>
+     
+        <div class="item">
+            <img src="image/women_shoe10.jpg" alt="women10">
+            <h4> Adidas Ultraboost </h4>
+            <h3> Men's Ultraboost 21 Running Shoe<br>
+                Size Available: 6, 7, 8, 9, 10 </h3>
+            <h3> ₹1800 </h3>
+            <button onclick="Addtocart('men2', 'image/men_shoe2.jpg', '1800')"> Add to cart </button>
+        </div>
+      
+        <div class="item">
+            <img src="image/women_shoe11.jpg" alt="women11">
+            <h4> Puma RS-X </h4>
+            <h3> Men's RS-X Reinvented Sneaker<br>
+                Size Available: 6, 7, 8, 9, 10 </h3>
+            <h3> ₹950 </h3>
+            <button onclick="Addtocart('men3', 'image/men_shoe3.jpg', '950')"> Add to cart </button>
+        </div>
+       
+        <div class="item">
+            <img src="image/women_shoe12.jpg" alt="women12">
+            <h4> Reebok Classic </h4>
+            <h3> Men's Classic Leather Sneaker<br>
+                Size Available: 6, 7, 8, 9, 10 </h3>
+            <h3> ₹890 </h3>
+            <button onclick="Addtocart('men4', 'image/men_shoe4.jpg', '890')"> Add to cart </button>
+        </div>
+       
+        <div class="item">
+            <img src="image/women_shoe20.jpg" alt="women13">
+            <h4> New Balance </h4>
+            <h3> Men's 574 Classic Sneaker<br>
+                Size Available: 6, 7, 8, 9, 10 </h3>
+            <h3> ₹1150 </h3>
+            <button onclick="Addtocart('men5', 'image/men_shoe5.jpg', '1150')"> Add to cart </button>
+        </div>
+        
+        <div class="item">
+            <img src="image/women_shoe17.jpg" alt="women14">
+            <h4> ASICS </h4>
+            <h3> Men's Gel-Venture 7 Running Shoe<br>
+                Size Available: 6, 7, 8, 9, 10 </h3>
+            <h3> ₹1300 </h3>
+            <button onclick="Addtocart('men6', 'image/men_shoe6.jpg', '1300')"> Add to cart </button>
+        </div>
+      
+        <div class="item">
+            <img src="image/women_shoe15.jpg" alt="women15">
+            <h4> Nike </h4>
+            <h3> Kid's Air Max 90<br>
+                Size Available: 4, 5, 6, 7 </h3>
+            <h3> ₹1200 </h3>
+            <button onclick="Addtocart('kid1', 'image/kid_shoe1.jpg', '1200')"> Add to cart </button>
+        </div>
+      
+        <div class="item">
+            <img src="image/women_shoe16.jpg" alt="women16">
+            <h4> Adidas </h4>
+            <h3> Kid's Fortarun Shoe<br>
+                Size Available: 4, 5, 6, 7 </h3>
+            <h3> ₹980 </h3>
+            <button onclick="Addtocart('kid2', 'image/kid_shoe2.jpg', '980')"> Add to cart </button>
+        </div>
+       
+    </div>
+</div>
+
+<div id="notification-box">Item added to cart!</div>
+
+<script>
+    function Addtocart(itemName, itemImage, price) {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        cart.push({ name: itemName, image: itemImage, price: price });
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        // Show notification
+        const notificationBox = document.getElementById('notification-box');
+        notificationBox.innerHTML = 'Added to the cart'; // Show the item name in the message
+        notificationBox.style.display = 'block';
+        
+        // Hide notification after 3 seconds
+        setTimeout(() => {
+            notificationBox.style.display = 'none';
+        }, 3000);
+    }
+    // Array of product categories
+const products = [
+    "Men's Shoes",
+    "Women's Shoes",
+    "Kids' Shoes",
+    "Shoes for Men",
+    "Shoes for Women",
+    "Shoes for Kids"
+];
+
+// Function to handle search on input change
+	document.getElementById('search').addEventListener('input', function() {
+    const query = this.value.toLowerCase();
+    const resultsContainer = document.getElementById('search-results');
+    resultsContainer.innerHTML = "";
+
+    const results = products.filter(product => product.toLowerCase().includes(query));
+
+    if (results.length > 0 && query) {
+        results.forEach(result => {
+            const div = document.createElement('div');
+            div.textContent = result;
+            div.onclick = function() { 
+                document.getElementById('search').value = result;
+                resultsContainer.innerHTML = "";
+                resultsContainer.style.display = 'none';
+                
+                if (result === "Men's Shoes" || result === "Shoes for Men") {
+                    window.location.href = 'shoewebsitem.html';
+                } else if (result === "Women's Shoes" || result === "Shoes for Women") {
+                    window.location.href = 'shoewebsitew.html';
+                } else if (result === "Kids' Shoes" || result === "Shoes for Kids") {
+                    window.location.href = 'shoewebsitek.html';
+                }
+            };
+            resultsContainer.appendChild(div);
+        });
+        resultsContainer.style.display = 'block';
+    } else {
+        resultsContainer.style.display = 'none';
+    }
+});
+
+// Hide results when clicking outside the search input
+	document.addEventListener('click', function(event) {
+    const resultsContainer = document.getElementById('search-results');
+    if (!event.target.closest('.search-container')) {
+        resultsContainer.style.display = 'none';
+    }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shoe Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+   <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color:rgb(255, 128, 128);
+            color: black;
+            font-family: Arial, sans-serif;
+        }
+
+        #top-data {
+            background-color: #1e1e2f;
+            color: white;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+
+        #top-data a {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            margin-right: 20px;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        #top-data a:hover {
+           text-decoration: underline;
+        }
+
+        #top-data img {
+            width: 60px;
+            height: 60px;
+        }
+
+        .search-container {
+            position: relative;
+            flex-grow: 1;
+            max-width: 600px;
+            margin-left: 20px;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        #search {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            font-size: 16px;
+            border-radius: 30px;
+            border: 1px solid #ccc;
+        }
+
+        .scroll-container {
+            padding: 20px;
+            height: calc(100vh - 90px);
+            overflow-y: auto;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+           
+        }
+
+      .item {
+		 margin-top: 25px;
+    	 background-color: rgb(255, 255, 255);
+   		 width: 300px;
+   		 padding: 20px;
+    	 text-align: center;
+    	 border-radius: 10px;
+    	 display: flex;
+    	flex-direction: column;
+}
+
+	.item img {
+    width: 100%;
+    height: 200px;
+    border-radius: 10px;
+	}
+
+	.item h4, .item h3 {
+    margin: 10px ;
+	}
+	.item:hover {
+    transform: scale(1.1); /* Slightly increase the size */
+    z-index: 1; /* Bring it to the front */
+    transition: transform 0.3s ease; /* Smooth transition */
+}
+    button {
+    background-color: rgb(255, 0, 128);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    width: 150px;
+    height: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: auto; 																			/* This keeps the button at the bottom */
+    margin-left: auto;																			 /* Center the button horizontally */
+    margin-right: auto; /* Center the button horizontally */
+    display: block; 																			/* Make the button a block element for centering */
+}
+
+
+	button:hover {
+    background-color: rgb(128, 0, 128);
+	}
+
+        #notification-box {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: lightgreen;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+            z-index: 1000;
+        }
+                .scroll-container {
+            height: calc(100vh - 90px); 
+            width: 100%;
+            overflow-y: auto; 
+        }
+
+        .scroll-container::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .scroll-container::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 5px;
+        }
+
+        .scroll-container::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+		
+
+	#search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: white;
+    border-radius: 5px;
+    z-index: 1000;
+    display: none;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	}
+
+	#search-results div {
+    padding: 10px;
+    cursor: pointer;
+    color: black; 
+	}
+
+    </style>
+</head>
+<body>
+  
+<div id="top-data">
+    <div>
+         <a href="shoewebsite.html">
+    <img src="image/DALL·E 2024-10-16 20.09.53 - A professional and minimalist logo design for a shoe website, featuring a stylized shoe silhouette without any text. The logo should have a dark blue .webp" alt="Shoe Website Logo">
+	</a>
+       
+        <a href="shoewebsitem.html">Men</a>
+        <a href="shoewebsitew.html">Women</a>
+        <a href="shoewebsitek.html">Kids</a>
+    </div>
+    <div class="search-container">
+        <i class="fas fa-search"></i>
+        <input id="search" placeholder="Search for Products..." oninput="showSearchResults()">
+        <div id="search-results"></div>
+    </div>
+    <a href="shoewebsitecart.html">&#x1f6d2;</a>
+</div>
+
+<div class="scroll-container">
+    <div class="container" id="product-container">
+        <div class="item" data-name="kids1">
+            <img src="image/kidsshoe1.jpg" alt="kids1">
+            <h4>Puma</h4>
+            <h3>Unisex-Kids' Flex PS Sneaker<br>Size Available : 4,5,6,7,8</h3>
+            <h3>₹450</h3>
+            <button onclick="Addtocart('Puma', 'image/kidsshoe1.jpg', '450')">Add to cart</button>
+        </div>
+
+        <div class="item" data-name="kids2">
+            <img src="image/kidsshoe2.jpg" alt="kids2">
+            <h4>NEOBABY</h4>
+            <h3>Casual Shoes for 2 Years to 4.5 Years Kids Boys & Girls<br>Size Available : 4,5,6,7,8</h3>
+            <h3>₹450</h3>
+            <button onclick="Addtocart('NEOBABY', 'image/kidsshoe2.jpg', '450')">Add to cart</button>
+        </div>
+
+        <div class="item" data-name="kids3">
+            <img src="image/kidsshoe3.jpg" alt="kids3">
+            <h4>Puma</h4>
+            <h3>Unisex-Kids' Flex Sneaker<br>Size Available : 4,5,6,7,8</h3>
+            <h3>₹500</h3>
+            <button onclick="Addtocart('Puma', 'image/kidsshoe3.jpg', '500')">Add to cart</button>
+        </div>
+
+        <div class="item" data-name="kids4">
+            <img src="image/kidsshoe4.jpg" alt="kids4">
+            <h4>Puma</h4>
+            <h3>Unisex-Kids' All-Day Active Sneaker<br>Size Available : 4,5,6,7,8</h3>
+            <h3>₹550</h3>
+            <button onclick="Addtocart('Puma', 'image/kidsshoe4.jpg', '550')">Add to cart</button>
+        </div>
+
+        <div class="item" data-name="kids5">
+            <img src="image/kidsshoe5.jpg" alt="kids5">
+            <h4>Campus</h4>
+            <h3>Kid's T&J-06 Running Shoes<br>Size Available : 4,5,6,7,8</h3>
+            <h3>₹890</h3>
+            <button onclick="Addtocart('Campus', 'image/kidsshoe5.jpg', '890')">Add to cart</button>
+        </div>
+
+        <div class="item" data-name="kids6">
+            <img src="image/kidsshoe6.jpg" alt="kids6">
+            <h4>Campus</h4>
+            <h3>Kid's T&J-07V Running Shoes<br>Size Available : 4,5,6,7,8</h3>
+            <h3>₹985</h3>
+            <button onclick="Addtocart('Campus', 'image/kidsshoe6.jpg', '985')">Add to cart</button>
+        </div>
+
+        <div class="item" data-name="kids7">
+            <img src="image/kidsshoe7.jpg" alt="kids7">
+            <h4>Puma</h4>
+            <h3>Unisex-Kids' Anzarun Sneaker<br>Size Available : 4,5,6,7,8</h3>
+            <h3>₹990</h3>
+            <button onclick="Addtocart('Puma', 'image/kidsshoe7.jpg', '990')">Add to cart</button>
+        </div>
+
+        <div class="item" data-name="kids8">
+            <img src="image/kidsshoe8.jpg" alt="kids8">
+            <h4>Puma</h4>
+            <h3>Unisex-Kids' Anzarun Sneaker<br>Size Available : 4,5,6,7,8</h3>
+            <h3>₹999</h3>
+            <button onclick="Addtocart('Puma', 'image/kidsshoe8.jpg', '999')">Add to cart</button>
+        </div>
+        
+         <div class="item" data-name="kids9">
+            <img src="image/kidsshoe9.jpg" alt="kids5">
+            <h4>Campus</h4>
+            <h3>Kid's T&J-06 Running Shoes<br>Size Available : 4,5,6,7,8</h3>
+            <h3>₹890</h3>
+            <button onclick="Addtocart('Campus', 'image/kidsshoe9.jpg', '890')">Add to cart</button>
+        </div>
+
+        <div class="item" data-name="kids10">
+            <img src="image/kidsshoe10.jpg" alt="kids6">
+            <h4>Campus</h4>
+            <h3>Kid's T&J-07V Running Shoes<br>Size Available : 4,5,6,7,8</h3>
+            <h3>₹985</h3>
+            <button onclick="Addtocart('Campus', 'image/kidsshoe10.jpg', '985')">Add to cart</button>
+        </div>
+
+        <div class="item" data-name="kids11">
+            <img src="image/kidsshoe11.jpg" alt="kids7">
+            <h4>Puma</h4>
+            <h3>Unisex-Kids' Anzarun Sneaker<br>Size Available : 4,5,6,7,8</h3>
+            <h3>₹990</h3>
+            <button onclick="Addtocart('Puma', 'image/kidsshoe11.jpg', '990')">Add to cart</button>
+        </div>
+
+        <div class="item" data-name="kids12">
+            <img src="image/kidsshoe12.jpg" alt="kids8">
+            <h4>Puma</h4>
+            <h3>Unisex-Kids' Anzarun Sneaker<br>Size Available : 4,5,6,7,8</h3>
+            <h3>₹999</h3>
+            <button onclick="Addtocart('Puma', 'image/kidsshoe12.jpg', '999')">Add to cart</button>
+        </div>
+         <div class="item" data-name="kids5">
+            <img src="image/kidsshoe13.jpg" alt="kids5">
+            <h4>Campus</h4>
+            <h3>Kid's T&J-06 Running Shoes<br>Size Available : 4,5,6,7,8</h3>
+            <h3>₹890</h3>
+            <button onclick="Addtocart('Campus', 'image/kidsshoe13.jpg', '890')">Add to cart</button>
+        </div>
+
+        <div class="item" data-name="kids14">
+            <img src="image/kidsshoe14.jpg" alt="kids6">
+            <h4>Campus</h4>
+            <h3>Kid's T&J-07V Running Shoes<br>Size Available : 4,5,6,7,8</h3>
+            <h3>₹985</h3>
+            <button onclick="Addtocart('Campus', 'image/kidsshoe14.jpg', '985')">Add to cart</button>
+        </div>
+
+        <div class="item" data-name="kids15">
+            <img src="image/kidsshoe15.jpg" alt="kids7">
+            <h4>Puma</h4>
+            <h3>Unisex-Kids' Anzarun Sneaker<br>Size Available : 4,5,6,7,8</h3>
+            <h3>₹990</h3>
+            <button onclick="Addtocart('Puma', 'image/kidsshoe15.jpg', '990')">Add to cart</button>
+        </div>
+
+        <div class="item" data-name="kids16">
+            <img src="image/kidsshoe16.jpg" alt="kids8">
+            <h4>Puma</h4>
+            <h3>Unisex-Kids' Anzarun Sneaker<br>Size Available : 4,5,6,7,8</h3>
+            <h3>₹999</h3>
+            <button onclick="Addtocart('Puma', 'image/kidsshoe16.jpg', '999')">Add to cart</button>
+        </div>
+
+    </div>
+</div>
+
+<!-- Notification Box -->
+<div id="notification-box"></div>
+
+<script>
+    function Addtocart(itemName, itemImage, price) {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        cart.push({ name: itemName, image: itemImage, price: price });
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        // Show notification
+        const notificationBox = document.getElementById('notification-box');
+        notificationBox.innerHTML = 'Added to the cart'; // Show the item name in the message
+        notificationBox.style.display = 'block';
+        
+        // Hide notification after 3 seconds
+        setTimeout(() => {
+            notificationBox.style.display = 'none';
+        }, 3000);
+    }
+    // Array of product categories
+const products = [
+    "Men's Shoes",
+    "Women's Shoes",
+    "Kids' Shoes",
+    "Shoes for Men",
+    "Shoes for Women",
+    "Shoes for Kids"
+];
+
+// Function to handle search on input change
+	document.getElementById('search').addEventListener('input', function() {
+    const query = this.value.toLowerCase();
+    const resultsContainer = document.getElementById('search-results');
+    resultsContainer.innerHTML = "";
+
+    const results = products.filter(product => product.toLowerCase().includes(query));
+
+    if (results.length > 0 && query) {
+        results.forEach(result => {
+            const div = document.createElement('div');
+            div.textContent = result;
+            div.onclick = function() { 
+                document.getElementById('search').value = result;
+                resultsContainer.innerHTML = "";
+                resultsContainer.style.display = 'none';
+                
+                if (result === "Men's Shoes" || result === "Shoes for Men") {
+                    window.location.href = 'shoewebsitem.html';
+                } else if (result === "Women's Shoes" || result === "Shoes for Women") {
+                    window.location.href = 'shoewebsitew.html';
+                } else if (result === "Kids' Shoes" || result === "Shoes for Kids") {
+                    window.location.href = 'shoewebsitek.html';
+                }
+            };
+            resultsContainer.appendChild(div);
+        });
+        resultsContainer.style.display = 'block';
+    } else {
+        resultsContainer.style.display = 'none';
+    }
+});
+
+// Hide results when clicking outside the search input
+	document.addEventListener('click', function(event) {
+    const resultsContainer = document.getElementById('search-results');
+    if (!event.target.closest('.search-container')) {
+        resultsContainer.style.display = 'none';
+    }
+});
+</script>
+
+</body>
+</html>
+
