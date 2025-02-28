@@ -14,7 +14,4 @@
 ### CSS – Styling and responsive design.
 ### JavaScript – Interactive features like the shopping cart and dynamic content updates.
 
-### How to Use
-Browse different shoe collections and view product details.
-Add desired shoes to the shopping cart.
-Review selected items and proceed to checkout.
+
